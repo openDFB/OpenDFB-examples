@@ -1,0 +1,281 @@
+AC_INIT
+AC_CONFIG_SRCDIR([src/df_andi.c])
+
+AC_PREREQ(2.61)
+
+PACKAGE=DirectFB-examples
+VERSION=1.6.0
+
+AM_INIT_AUTOMAKE($PACKAGE,$VERSION)
+
+AC_SUBST(VERSION)
+
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
+
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
+AC_CANONICAL_HOST
+
+AC_PROG_CC
+
+
+dnl Clear default CFLAGS
+if test x"$CFLAGS" = x"-g -O2"; then
+  CFLAGS=
+fi
+  
+CFLAGS="-O3 -pipe $CFLAGS"
+
+if test "x$GCC" = xyes; then
+  CFLAGS="-Wall $CFLAGS"
+fi
+
+AC_CHECK_HEADERS(stdbool.h)
+
+AC_ARG_ENABLE(debug, [  --enable-debug          turn on debugging [default=no]],
+if eval "test x$enable_debug = xyes"; then
+  CFLAGS="$CFLAGS -g3"
+fi)
+
+
+DIRECTFB_REQUIRED_VERSION=1.4.14
+
+PKG_CHECK_MODULES(DIRECTFB, directfb >= $DIRECTFB_REQUIRED_VERSION,[ WATER=`$PKG_CONFIG --variable=water directfb` ],
+	AC_MSG_ERROR([$DIRECTFB_PKG_ERRORS
+*** DirectFB $DIRECTFB_REQUIRED_VERSION or newer is required. The latest version
+*** of DirectFB is available from http://www.directfb.org/.]))
+
+AM_CONDITIONAL( WATER_RUNS, test "$WATER" = "runs" )
+
+AC_MSG_CHECKING(for DirectFB >= 1.5.3)
+  if $PKG_CONFIG --atleast-version "1.5.3" directfb ; then
+	STEREO_API=yes
+        AC_MSG_RESULT([found])
+  else
+        STEREO_API=no
+        AC_MSG_RESULT([not found])
+  fi
+
+AM_CONDITIONAL(HAVE_STEREO_API, test "$STEREO_API" = "yes")
+
+AC_ARG_WITH(apps,
+	AC_HELP_STRING([--with-apps=LIST],
+		[LIST is a comma separated selection of applications to build.]
+		[@<:@default=all@:>@]),
+	[apps="$withval"],
+	[apps=all])
+
+df_andi=no
+df_andi3d=no
+df_bltload=no
+df_cpuload=no
+df_databuffer=no
+df_dioload=no
+df_dok=no
+df_drivertest=no
+df_drivertest2=no
+df_fire=no
+df_flip=no
+df_fonts=no
+df_input=no
+df_joystick=no
+df_layer=no
+df_matrix=no
+df_matrix_water=no
+df_netload=no
+df_palette=no
+df_particle=no
+df_porter=no
+df_stress=no
+df_texture=no
+df_texture3d=no
+df_video=no
+df_video_particle=no
+df_window=no
+pss=no
+ve_test=no
+df_knuckles=no
+df_neo=no
+spacedream=no
+
+if test "$apps" = "all"; then
+	df_andi=yes
+	df_andi3d=yes
+	df_bltload=yes
+	df_cpuload=yes
+	df_databuffer=yes
+	df_dioload=yes
+	df_dok=yes
+	df_drivertest=yes
+	df_drivertest2=yes
+	df_fire=yes
+	df_flip=yes
+	df_fonts=yes
+	df_input=yes
+	df_joystick=yes
+	df_layer=yes
+	df_matrix=yes
+	df_matrix_water=yes
+	df_netload=yes
+	df_palette=yes
+	df_particle=yes
+	df_porter=yes
+	df_stress=yes
+	df_texture=yes
+	df_texture3d=yes
+	df_video=yes
+	df_video_particle=yes
+	df_window=yes
+	pss=yes
+	ve_test=yes
+	df_knuckles=yes
+	df_neo=yes
+	spacedream=yes
+
+elif test "$apps" != "none"; then
+	apps=`echo $apps | sed 's/,/ /g'`
+	for app in $apps; do
+		case "$app" in
+		df_andi) 		df_andi=yes;;
+		df_andi3d)		df_andi3d=yes;;
+		df_bltload)		df_bltfload=yes;;
+		df_cpuload)		df_cpuload=yes;;
+		df_databuffer)		df_databuffer=yes;;
+		df_dioload) 		df_dioload=yes;;
+		df_dok)			df_dok=yes;;
+		df_drivertest)		df_drivertest=yes;;
+		df_drivertest2)		df_drivertest2=yes;;
+		df_fire)		df_fire=yes;;
+		df_flip)		df_flip=yes;;
+		df_fonts)		df_fonts=yes;;
+		df_input)		df_input=yes;;
+		df_joystick)		df_joystick=yes;;
+		df_layer)		df_layer=yes;;
+		df_matrix)		df_matrix=yes;;
+		df_matrix_water)	df_matrix_water=yes;;
+		df_netload)		df_netload=yes;;
+		df_palette)		df_palette=yes;;
+		df_particle)		df_particle=yes;;
+		df_porter)		df_porter=yes;;
+		df_stress)		df_stress=yes;;
+		df_texture)		df_texture=yes;;
+		df_texture3d)		df_texture3d=yes;;
+		df_video)		df_video=yes;;
+		df_video_particle)	df_video_particle=yes;;
+		df_window)		df_window=yes;;
+		pss)			pss=yes;;
+		ve_test)		ve_test=yes;;
+		df_knuckles)		df_knuckles=yes;;
+		df_neo)			df_neo=yes;;
+		spacedream)		spacedream=yes;;
+		*)
+			AC_MSG_WARN([Unknown app $app]);;
+		esac
+	done
+fi
+
+if test "$STEREO_API" != "yes"; then
+	if test "$df_andi3d" = "yes"; then
+		df_andi3d=no
+		AC_MSG_WARN([df_andi3d is excluded since stereo API is not supported])
+	fi
+	if test "$df_texture3d" = "yes"; then
+		df_texture3d=no
+		AC_MSG_WARN([df_texture3d is excluded since stereo API is not supported])
+	fi
+fi
+
+if test "$WATER" != "runs"; then
+	if test "$df_matrix_water" = "yes"; then
+		df_matrix_water=no
+		AC_MSG_WARN([df_matrix_water is excluded since water API is not supported])
+	fi
+fi
+
+AM_CONDITIONAL(DF_ANDI, test "$df_andi" = "yes")
+AM_CONDITIONAL(DF_ANDI3D, test "$df_andi3d" = "yes")
+AM_CONDITIONAL(DF_BLTLOAD, test "$df_bltload" = "yes")
+AM_CONDITIONAL(DF_CPULOAD, test "$df_cpuload" = "yes")
+AM_CONDITIONAL(DF_DATABUFFER, test "$df_databuffer" = "yes")
+AM_CONDITIONAL(DF_DIOLOAD, test "$df_dioload" = "yes")
+AM_CONDITIONAL(DF_DOK, test "$df_dok" = "yes")
+AM_CONDITIONAL(DF_DRIVERTEST, test "$df_drivertest" = "yes")
+AM_CONDITIONAL(DF_DRIVERTEST2, test "$df_drivertest2" = "yes")
+AM_CONDITIONAL(DF_FIRE, test "$df_fire" = "yes")
+AM_CONDITIONAL(DF_FLIP, test "$df_flip" = "yes")
+AM_CONDITIONAL(DF_FONTS, test "$df_fonts" = "yes")
+AM_CONDITIONAL(DF_INPUT, test "$df_input" = "yes")
+AM_CONDITIONAL(DF_JOYSTICK, test "$df_joystick" = "yes")
+AM_CONDITIONAL(DF_LAYER, test "$df_layer" = "yes")
+AM_CONDITIONAL(DF_MATRIX, test "$df_matrix" = "yes")
+AM_CONDITIONAL(DF_MATRIX_WATER, test "$df_matrix_water" = "yes")
+AM_CONDITIONAL(DF_NETLOAD, test "$df_netload" = "yes")
+AM_CONDITIONAL(DF_PALETTE, test "$df_palette" = "yes")
+AM_CONDITIONAL(DF_PARTICLE, test "$df_particle" = "yes")
+AM_CONDITIONAL(DF_PORTER, test "$df_porter" = "yes")
+AM_CONDITIONAL(DF_STRESS, test "$df_stress" = "yes")
+AM_CONDITIONAL(DF_TEXTURE, test "$df_texture" = "yes")
+AM_CONDITIONAL(DF_TEXTURE3D, test "$df_texture3d" = "yes")
+AM_CONDITIONAL(DF_VIDEO, test "$df_video" = "yes")
+AM_CONDITIONAL(DF_VIDEO_PARTICLE, test "$df_video_particle" = "yes")
+AM_CONDITIONAL(DF_WINDOW, test "$df_window" = "yes")
+AM_CONDITIONAL(PSS, test "$pss" = "yes")
+AM_CONDITIONAL(VE_TEST, test "$ve_test" = "yes")
+AM_CONDITIONAL(DF_KNUCKLES, test "$df_knuckles" = "yes")
+AM_CONDITIONAL(DF_NEO, test "$df_neo" = "yes")
+AM_CONDITIONAL(SPACEDREAM, test "$spacedream" = "yes")
+
+CFLAGS="$CFLAGS -Werror-implicit-function-declaration"
+
+DATADIR=$datadir/directfb-examples
+AC_SUBST(DATADIR)
+
+AC_CONFIG_FILES([
+Makefile
+data/Makefile
+data/df_neo/Makefile
+data/spacedream/Makefile
+src/Makefile
+src/df_knuckles/Makefile
+src/df_neo/Makefile
+src/spacedream/Makefile
+])
+AC_OUTPUT
+
+AC_MSG_RESULT([
+Building Applications:
+df_andi                   $df_andi
+df_andi3d                 $df_andi3d
+df_bltload                $df_bltload
+df_cpuload                $df_cpuload
+df_databuffer             $df_databuffer
+df_dioload                $df_dioload
+df_dok                    $df_dok
+df_drivertest             $df_drivertest
+df_drivertest2            $df_drivertest2
+df_fire                   $df_fire
+df_flip                   $df_flip
+df_fonts                  $df_fonts
+df_input                  $df_input
+df_joystick               $df_joystick
+df_layer                  $df_layer
+df_matrix                 $df_matrix
+df_matrix_water           $df_matrix_water
+df_netload                $df_netload
+df_palette                $df_palette
+df_particle               $df_particle
+df_porter                 $df_porter
+df_stress                 $df_stress
+df_texture                $df_texture
+df_texture3d              $df_texture3d
+df_video                  $df_video
+df_video_particle         $df_video_particle
+df_window                 $df_window
+pss                       $pss
+ve_test                   $ve_test
+df_knuckles               $df_knuckles
+df_neo                    $df_neo
+spacedream                $spacedream
+])
+
