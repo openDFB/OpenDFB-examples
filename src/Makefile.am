@@ -79,10 +79,6 @@ if DF_MATRIX
 bin_PROGRAMS += df_matrix
 endif
 
-if DF_MATRIX_WATER
-bin_PROGRAMS += df_matrix_water
-endif
-
 if DF_NETLOAD
 bin_PROGRAMS += df_netload
 endif
@@ -175,9 +171,6 @@ df_layer_LDADD = $(LIBADDS) -lm
 
 df_matrix_SOURCES = df_matrix.c
 df_matrix_LDADD = $(LIBADDS) -lm
-
-df_matrix_water_SOURCES = df_matrix_water.c
-df_matrix_water_LDADD = $(LIBADDS) -lm
 
 df_netload_SOURCES = df_netload.c 
 df_netload_LDADD  = $(LIBADDS)

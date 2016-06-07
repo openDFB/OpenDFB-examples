@@ -230,7 +230,7 @@ static int SetupDirectFB (int argc, char *argv[])
 
   dfb->SetCooperativeLevel (dfb, DFSCL_FULLSCREEN);
 
-  ret = dfb->CreateInputEventBuffer (dfb, DICAPS_KEYS | DICAPS_AXES,
+  ret = dfb->CreateInputEventBuffer (dfb, DIDCAPS_KEYS | DIDCAPS_AXES,
                                      DFB_FALSE, &event_buffer);
   if (ret)
     {
@@ -316,7 +316,7 @@ int main (int argc, char *argv[])
                 default:
                   ;
                 }
-              
+
               switch (evt.key_id)
                 {
                 case DIKI_B:

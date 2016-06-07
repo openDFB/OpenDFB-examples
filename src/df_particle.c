@@ -156,7 +156,7 @@ main( int argc, char *argv[] )
      if (err != DFB_OK)
           DirectFBError( "Failed requesting exclusive access", err );
 
-     err = dfb->CreateInputEventBuffer( dfb, DICAPS_ALL, DFB_FALSE, &buffer );
+     err = dfb->CreateInputEventBuffer( dfb, DIDCAPS_ALL, DFB_FALSE, &buffer );
      if (err != DFB_OK) {
           DirectFBError( "CreateInputEventBuffer failed", err );
           dfb->Release( dfb );

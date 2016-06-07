@@ -418,7 +418,7 @@ main( int argc, char *argv[] )
 
      DFBCHECK(dfb->CreateSurface(dfb, &surface_desc, &surface));
 
-     DFBCHECK(dfb->CreateInputEventBuffer(dfb, DICAPS_KEYS,
+     DFBCHECK(dfb->CreateInputEventBuffer(dfb, DIDCAPS_KEYS,
                                           DFB_FALSE, &keybuffer));
 
      while (1) {

@@ -5,7 +5,7 @@
    Written by Denis Oliver Kropp <dok@directfb.org>,
               Andreas Hundt <andi@fischlustig.de> and
               Sven Neumann <neo@directfb.org>.
-              
+
    This file is subject to the terms and conditions of the MIT License:
 
    Permission is hereby granted, free of charge, to any person
@@ -126,7 +126,7 @@ int main( int argc, char *argv[] )
      if (ret)
           DirectFBErrorFatal( "DirectFBCreate failed", ret );
 
-     
+
      /* Create a videoprovider for the file or device */
      ret = dfb->CreateVideoProvider( dfb, argv[1], &videoprovider );
      if (ret)
@@ -135,7 +135,7 @@ int main( int argc, char *argv[] )
      /* Query capabilities of the video provider */
      videoprovider->GetCapabilities (videoprovider, &vcaps);
 
-     
+
      /* Enumerate display layers */
      ret = dfb->EnumDisplayLayers( dfb, enum_layers_callback, &videolayer );
      if (ret)
@@ -231,7 +231,7 @@ int main( int argc, char *argv[] )
      }
 
      /* Create an input buffer for any device that has keys */
-     ret = dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS, DFB_TRUE, &events );
+     ret = dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS, DFB_TRUE, &events );
      if (ret)
           DirectFBErrorFatal( "dfb->CreateEventBuffer failed", ret );
 

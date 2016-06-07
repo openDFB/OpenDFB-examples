@@ -217,7 +217,7 @@ main (int    argc,
   DFBCHECK (DirectFBCreate (&dfb));
 
   dfb->SetCooperativeLevel (dfb, DFSCL_FULLSCREEN);
-  DFBCHECK (dfb->CreateInputEventBuffer (dfb, DICAPS_KEYS,
+  DFBCHECK (dfb->CreateInputEventBuffer (dfb, DIDCAPS_KEYS,
                                          DFB_FALSE, &keybuffer));
 
   /*  create the primary surface  */

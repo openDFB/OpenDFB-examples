@@ -5,7 +5,7 @@
    Written by Denis Oliver Kropp <dok@directfb.org>,
               Andreas Hundt <andi@fischlustig.de> and
               Sven Neumann <neo@directfb.org>.
-              
+
    This file is subject to the terms and conditions of the MIT License:
 
    Permission is hereby granted, free of charge, to any person
@@ -73,11 +73,11 @@ main( int argc, char *argv[] )
      primary->Clear( primary, 0xff, 0xff, 0xff, 0xff );
 
      t1 = t2 = myclock();
-     
+
      /* Main loop. */
      while (1) {
           DFBInputEvent event;
-          
+
           /* Check for new events. */
           while (events->GetEvent( events, DFB_EVENT(&event) ) == DFB_OK) {
 
@@ -147,16 +147,16 @@ init_application( int *argc, char **argv[] )
      /* Fill the surface description. */
      desc.flags       = DSDESC_CAPS;
      desc.caps        = DSCAPS_PRIMARY | DSCAPS_DOUBLE;
-     
+
      /* Create the primary surface. */
      ret = dfb->CreateSurface( dfb, &desc, &primary );
      if (ret) {
           DirectFBError( "IDirectFB::CreateSurface() failed", ret );
           exit_application( 3 );
      }
-     
+
      /* Create an event buffer with key capable devices attached. */
-     ret = dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS, DFB_FALSE, &events );
+     ret = dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS, DFB_FALSE, &events );
      if (ret) {
           DirectFBError( "IDirectFB::CreateEventBuffer() failed", ret );
           exit_application( 4 );

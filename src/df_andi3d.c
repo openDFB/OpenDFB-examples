@@ -576,7 +576,7 @@ static void init_resources( int argc, char *argv[] )
      }
 
      /* create an input buffer for key events */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS,
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS,
                                            DFB_TRUE, &keybuffer ));
 
 

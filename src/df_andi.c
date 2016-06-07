@@ -497,7 +497,7 @@ static void init_resources( int argc, char *argv[] )
        DirectFBError( "Failed to get primary screen", err );
 
      /* create an input buffer for key events */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS,
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS,
                                            DFB_FALSE, &keybuffer ));
 
      /* set our cooperative level to DFSCL_FULLSCREEN for exclusive access to

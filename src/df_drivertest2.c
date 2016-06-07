@@ -5,7 +5,7 @@
    Written by Denis Oliver Kropp <dok@directfb.org>,
               Andreas Hundt <andi@fischlustig.de> and
               Sven Neumann <neo@directfb.org>.
-              
+
    This file is subject to the terms and conditions of the MIT License:
 
    Permission is hereby granted, free of charge, to any person
@@ -78,7 +78,7 @@ void init_resources( int argc, char *argv[] )
      DFBCHECK(DirectFBCreate( &dfb ));
 
      /* create an input buffer for key events */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS,
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS,
                                            DFB_FALSE, &keybuffer ));
 
      /* set our cooperative level to DFSCL_FULLSCREEN for exclusive access to
@@ -131,15 +131,15 @@ void init_resources( int argc, char *argv[] )
      DFBCHECK(dfb->CreateSurface( dfb, &dsc, &testimage ));
 
      DFBCHECK(provider->RenderTo( provider, testimage, NULL ));
-     
+
      dsc.width  = 192;
      dsc.height = 96;
 
      DFBCHECK(dfb->CreateSurface( dfb, &dsc, &testimage2 ));
 
      DFBCHECK(provider->RenderTo( provider, testimage2, NULL ));
-     
-     
+
+
      provider->Release( provider );
 }
 
@@ -196,10 +196,10 @@ int main( int argc, char *argv[] )
                                    primary->SetClip( primary, &clipreg );
                               else
                                    primary->SetClip( primary, NULL );
-                              
+
                               primary->SetBlittingFlags( primary, DSBLIT_NOFX );
                               primary->Blit( primary, gridimage, NULL,  128, 128 );
-                              
+
                               primary->SetBlittingFlags( primary, blittingflags );
                               primary->Blit( primary, testimage2, NULL,   64,  96 );
                               primary->Blit( primary, testimage2, NULL, 384,  96 );

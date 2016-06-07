@@ -82,7 +82,6 @@ df_input=no
 df_joystick=no
 df_layer=no
 df_matrix=no
-df_matrix_water=no
 df_netload=no
 df_palette=no
 df_particle=no
@@ -116,7 +115,6 @@ if test "$apps" = "all"; then
 	df_joystick=yes
 	df_layer=yes
 	df_matrix=yes
-	df_matrix_water=yes
 	df_netload=yes
 	df_palette=yes
 	df_particle=yes
@@ -153,7 +151,6 @@ elif test "$apps" != "none"; then
 		df_joystick)		df_joystick=yes;;
 		df_layer)		df_layer=yes;;
 		df_matrix)		df_matrix=yes;;
-		df_matrix_water)	df_matrix_water=yes;;
 		df_netload)		df_netload=yes;;
 		df_palette)		df_palette=yes;;
 		df_particle)		df_particle=yes;;
@@ -209,7 +206,6 @@ AM_CONDITIONAL(DF_INPUT, test "$df_input" = "yes")
 AM_CONDITIONAL(DF_JOYSTICK, test "$df_joystick" = "yes")
 AM_CONDITIONAL(DF_LAYER, test "$df_layer" = "yes")
 AM_CONDITIONAL(DF_MATRIX, test "$df_matrix" = "yes")
-AM_CONDITIONAL(DF_MATRIX_WATER, test "$df_matrix_water" = "yes")
 AM_CONDITIONAL(DF_NETLOAD, test "$df_netload" = "yes")
 AM_CONDITIONAL(DF_PALETTE, test "$df_palette" = "yes")
 AM_CONDITIONAL(DF_PARTICLE, test "$df_particle" = "yes")
@@ -261,7 +257,6 @@ df_input                  $df_input
 df_joystick               $df_joystick
 df_layer                  $df_layer
 df_matrix                 $df_matrix
-df_matrix_water           $df_matrix_water
 df_netload                $df_netload
 df_palette                $df_palette
 df_particle               $df_particle

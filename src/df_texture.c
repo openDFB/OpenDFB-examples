@@ -242,7 +242,7 @@ main( int argc, char *argv[] )
      }
 
      /* Create an event buffer for all devices. */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_ALL, DFB_FALSE, &events ));
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_ALL, DFB_FALSE, &events ));
 
      /* Load the font. */
      fdsc.flags  = DFDESC_HEIGHT;
@@ -353,7 +353,7 @@ main( int argc, char *argv[] )
      if (provider)
           provider->Release( provider );
 
-     /* Release other interfaces to shutdown DirectFB. */ 
+     /* Release other interfaces to shutdown DirectFB. */
      font->Release( font );
      texture->Release( texture );
      primary->Release( primary );

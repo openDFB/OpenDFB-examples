@@ -66,6 +66,8 @@ host_triplet = @host@
 @DF_DOK_TRUE@	biglogo.png		\
 @DF_DOK_TRUE@	card.png		\
 @DF_DOK_TRUE@	colorkeyed.gif		\
+@DF_DOK_TRUE@	cursor.png		\
+@DF_DOK_TRUE@	cursor_red.png		\
 @DF_DOK_TRUE@	fish.png		\
 @DF_DOK_TRUE@	intro.png		\
 @DF_DOK_TRUE@	melted.gif		\

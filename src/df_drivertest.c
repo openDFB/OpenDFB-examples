@@ -5,7 +5,7 @@
    Written by Denis Oliver Kropp <dok@directfb.org>,
               Andreas Hundt <andi@fischlustig.de> and
               Sven Neumann <neo@directfb.org>.
-              
+
    This file is subject to the terms and conditions of the MIT License:
 
    Permission is hereby granted, free of charge, to any person
@@ -78,7 +78,7 @@ void init_resources( int argc, char *argv[] )
      DFBCHECK(DirectFBCreate( &dfb ));
 
      /* create an input buffer for key events */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS,
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS,
                                            DFB_FALSE, &keybuffer ));
 
      /* set our cooperative level to DFSCL_FULLSCREEN for exclusive access to
@@ -131,15 +131,15 @@ void init_resources( int argc, char *argv[] )
      DFBCHECK(dfb->CreateSurface( dfb, &dsc, &testimage ));
 
      DFBCHECK(provider->RenderTo( provider, testimage, NULL ));
-     
+
      dsc.width  = 111;
      dsc.height = 77;
 
      DFBCHECK(dfb->CreateSurface( dfb, &dsc, &testimage2 ));
 
      DFBCHECK(provider->RenderTo( provider, testimage2, NULL ));
-     
-     
+
+
      provider->Release( provider );
 }
 

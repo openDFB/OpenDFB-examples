@@ -340,11 +340,11 @@ show_mouse_buttons (DFBInputEvent *evt)
      }
 
      if (mouse_x_max > 0 || mouse_y_max > 0)
-          snprintf( str, sizeof(str), "(%d/%d,%d/%d)", 
+          snprintf( str, sizeof(str), "(%d/%d,%d/%d)",
                     mouse_x, mouse_x_max, mouse_y, mouse_y_max);
      else
-          snprintf( str, sizeof(str), "(%d,%d)", 
-                    mouse_x, mouse_y); 
+          snprintf( str, sizeof(str), "(%d,%d)",
+                    mouse_x, mouse_y);
      primary->SetFont( primary, font_small );
      font_small->GetStringWidth( font_small, str, -1, &width );
      primary->SetColor( primary, 0xF0, 0xF0, 0xF0, 0xFF );
@@ -484,22 +484,22 @@ joystick_show_axisgroup( DFBRectangle *rect, int axis_x, int axis_y )
 
      screen_x = joystick_calc_screenlocation( rect->w, axis_x );
      screen_y = joystick_calc_screenlocation( rect->h, axis_y );
-     
+
      primary->SetColor( primary, 0x80, 0x80, 0x80, 0xFF );
      primary->DrawRectangle( primary, rect->x, rect->y, rect->w, rect->h );
-     
+
      primary->SetColor( primary, 0x00, 0x00, 0xFF, 0xFF );
      primary->DrawLine( primary, screen_x+rect->x, rect->y,
                                  screen_x+rect->x, rect->y + rect->h-1 );
      primary->DrawLine( primary, rect->x, screen_y + rect->y,
-                                 rect->x + rect->w-1, screen_y + rect->y );          
+                                 rect->x + rect->w-1, screen_y + rect->y );
 }
 
 static void
 show_joystick_event( DFBInputEvent *evt )
 {
      char buf[32];
-     
+
      DFBRectangle rect;
 
      primary->SetFont( primary, font_normal );
@@ -521,7 +521,7 @@ show_joystick_event( DFBInputEvent *evt )
           primary->DrawString( primary, buf, -1,
                                40, screen_height - 40, DSTF_LEFT );
      }
-     
+
      rect.x = 0;
      rect.y = 0;
      rect.w = screen_width/2 - 10;
@@ -532,7 +532,7 @@ show_joystick_event( DFBInputEvent *evt )
      joystick_show_axisgroup( &rect, joy_axis[2], joy_axis[3]);
 
      rect.y+= screen_height/2;
-     joystick_show_axisgroup( &rect, joy_axis[4], joy_axis[5]); 
+     joystick_show_axisgroup( &rect, joy_axis[4], joy_axis[5]);
 }
 
 static void
@@ -720,7 +720,7 @@ main( int argc, char *argv[] )
      dfb->EnumInputDevices( dfb, enum_input_device, &devices );
 
      /* create an event buffer for all devices */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_ALL,
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_ALL,
                                            DFB_FALSE, &events ));
 
      /* set our cooperative level to DFSCL_FULLSCREEN

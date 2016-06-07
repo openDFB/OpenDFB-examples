@@ -272,7 +272,7 @@ main( int argc, char *argv[] )
      }
 
      /* Create an event buffer for all devices. */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_ALL, DFB_FALSE, &events ));
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_ALL, DFB_FALSE, &events ));
 
      /* Load the font. */
      fdsc.flags  = DFDESC_HEIGHT;

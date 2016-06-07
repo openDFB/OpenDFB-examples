@@ -5,7 +5,7 @@
    Written by Denis Oliver Kropp <dok@directfb.org>,
               Andreas Hundt <andi@fischlustig.de> and
               Sven Neumann <neo@directfb.org>.
-              
+
    This file is subject to the terms and conditions of the MIT License:
 
    Permission is hereby granted, free of charge, to any person
@@ -86,7 +86,7 @@ main( int argc, char *argv[] )
 {
      /* Initialize application. */
      init_application( &argc, &argv );
-     
+
      /* Main loop. */
      while (1) {
           DFBInputEvent event;
@@ -207,14 +207,14 @@ fade_out_palette( IDirectFBSurface *surface )
 
                if (colors[i].g)
                     colors[i].g -= (colors[i].g >> 4) + 1;
-          
+
                if (colors[i].b)
                     colors[i].b -= (colors[i].b >> 4) + 1;
           }
 
           /* Wait for vertical retrace. */
           dfb->WaitForSync( dfb );
-          
+
           /* Set new palette data. */
           ret = palette->SetEntries( palette, colors, 256, 0 );
           if (ret) {
@@ -241,12 +241,12 @@ create_fire( IDirectFBSurface *surface )
 
      /* Retrieve the width and height. */
      surface->GetSize( surface, &fire->width, &fire->height );
-     
+
      /* Calculate how much of the height to skip. */
      fire->skip   = fire->height - 256;
      if (fire->skip < 0)
           fire->skip = 0;
-     
+
      if (fire->height > 256)
           fire->height = 256;
 
@@ -257,7 +257,7 @@ create_fire( IDirectFBSurface *surface )
           free( fire );
           return NULL;
      }
-     
+
      /* Generate the fire palette. */
      generate_palette( surface );
 
@@ -289,7 +289,7 @@ render_fire( Fire *fire )
           /* Loop through all columns but the first and the last one. */
           for (i = 0; i < fire->width - 2; i++) {
                int val;
-                
+
                /* Calculate the average of the current pixel and three below. */
                val = (d[i] + s[i] + s[i+1] + s[i+2]) >> 2;
 
@@ -381,21 +381,21 @@ init_application( int *argc, char **argv[] )
      desc.flags       = DSDESC_CAPS | DSDESC_PIXELFORMAT;
      desc.caps        = DSCAPS_PRIMARY | DSCAPS_FLIPPING;
      desc.pixelformat = DSPF_LUT8;
-     
+
      /* Create an 8 bit palette surface. */
      ret = dfb->CreateSurface( dfb, &desc, &primary );
      if (ret) {
           DirectFBError( "IDirectFB::CreateSurface() failed", ret );
           exit_application( 3 );
      }
-     
+
      /* Create an event buffer with key capable devices attached. */
-     ret = dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS, DFB_FALSE, &events );
+     ret = dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS, DFB_FALSE, &events );
      if (ret) {
           DirectFBError( "IDirectFB::CreateEventBuffer() failed", ret );
           exit_application( 4 );
      }
-     
+
      /* Create the fire. */
      fire = create_fire( primary );
      if (!fire)

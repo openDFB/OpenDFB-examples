@@ -45,7 +45,7 @@
               Sven Neumann <neo@directfb.org>,
               Ville Syrjälä <syrjala@sci.fi> and
               Claudio Ciccani <klan@users.sf.net>.
-              
+
    This file is subject to the terms and conditions of the MIT License:
 
    Permission is hereby granted, free of charge, to any person
@@ -274,7 +274,7 @@ main( int argc, char *argv[] )
           primary->FillRectangle( primary, -20, -120, 40, 40 );
 
           /* Fill a red rectangle down-right without AA. */
-          primary->SetColor( primary, 0xff, 0, 0, 0xff ); 
+          primary->SetColor( primary, 0xff, 0, 0, 0xff );
           primary->SetDrawingFlags( primary, DSDRAW_NOFX );
           primary->SetRenderOptions( primary, DSRO_MATRIX );
           primary->FillRectangle( primary, 100, 100, 100, 100 );
@@ -372,21 +372,21 @@ init_application( int *argc, char **argv[] )
      desc.flags       = DSDESC_CAPS;// | DSDESC_PIXELFORMAT;
      desc.caps        = DSCAPS_PRIMARY | DSCAPS_DOUBLE;
      desc.pixelformat = DSPF_ARGB;
-     
+
      /* Create an 8 bit palette surface. */
      ret = dfb->CreateSurface( dfb, &desc, &primary );
      if (ret) {
           DirectFBError( "IDirectFB::CreateSurface() failed", ret );
           exit_application( 3 );
      }
-     
+
      /* Create an event buffer with key capable devices attached. */
-     ret = dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS, DFB_FALSE, &events );
+     ret = dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS, DFB_FALSE, &events );
      if (ret) {
           DirectFBError( "IDirectFB::CreateEventBuffer() failed", ret );
           exit_application( 4 );
      }
-     
+
      /* Clear with black. */
      primary->Clear( primary, 0x00, 0x00, 0x00, 0xff );
      primary->Flip( primary, NULL, 0 );

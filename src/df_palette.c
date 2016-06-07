@@ -5,7 +5,7 @@
    Written by Denis Oliver Kropp <dok@directfb.org>,
               Andreas Hundt <andi@fischlustig.de> and
               Sven Neumann <neo@directfb.org>.
-              
+
    This file is subject to the terms and conditions of the MIT License:
 
    Permission is hereby granted, free of charge, to any person
@@ -55,7 +55,7 @@ static int screen_width, screen_height;
               DirectFBErrorFatal( #x, err );                                   \
            }                                                                   \
         }
-        
+
 static void
 generate_palette()
 {
@@ -124,7 +124,7 @@ main( int argc, char *argv[] )
      DFBCHECK(DirectFBCreate( &dfb ));
 
      /* create an event buffer for all devices */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_ALL,
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_ALL,
                                            DFB_FALSE, &events ));
 
      /* set our cooperative level to DFSCL_FULLSCREEN
@@ -149,7 +149,7 @@ main( int argc, char *argv[] )
      generate_palette();
 
      fill_surface( primary );
-     
+
      while (!quit) {
           DFBInputEvent evt;
 

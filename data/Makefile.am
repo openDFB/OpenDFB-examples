@@ -117,6 +117,8 @@ EXTRA_DIST =			\
 	card.png		\
 	colorkeyed.gif		\
 	convergence.png		\
+	cursor.png              \
+	cursor_red.png          \
 	decker.dgiff		\
 	decker.ttf		\
 	desktop.png		\

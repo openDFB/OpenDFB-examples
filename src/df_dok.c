@@ -45,7 +45,7 @@
 #include "pngtest3.h"
 
 #include "directfb_version.h"
- 
+
 #define DIRECTFB_ROTATE
 #if DIRECTFB_MAJOR_VERSION < 1
 #undef DIRECTFB_ROTATE
@@ -610,7 +610,7 @@ static void showResult()
 
           y += dsc.height/2 + ui_fontheight + 2;
      }
-     
+
      primary->Flip( primary, NULL, DSFLIP_NONE );
 
      key_events->Reset( key_events );
@@ -1749,7 +1749,7 @@ int main( int argc, char *argv[] )
      DFBCHECK(DirectFBCreate( &dfb ));
 
      /* create an input buffer for key events */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS,
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS,
                                            DFB_FALSE, &key_events ));
 
      /* Set the cooperative level to DFSCL_FULLSCREEN for exclusive access to the primary layer. */
@@ -1861,7 +1861,7 @@ int main( int argc, char *argv[] )
 
      DFBCHECK(dfb->CreateSurface( dfb, &dsc, &swirl ));
      DFBCHECK(provider->RenderTo( provider, swirl, NULL ));
-     
+
      provider->Release( provider );
 
      /* create a surface and render an image to it */
@@ -1900,10 +1900,10 @@ int main( int argc, char *argv[] )
 
      dsc.flags |= DSDESC_PIXELFORMAT;
      dsc.pixelformat = DSPF_YUY2;
-     
+
      DFBCHECK(dfb->CreateSurface( dfb, &dsc, &simple_ycbcr ));
      DFBCHECK(provider->RenderTo( provider, simple_ycbcr, NULL ));
-     
+
      provider->Release( provider );
 
      /* create a surface and render an image to it */

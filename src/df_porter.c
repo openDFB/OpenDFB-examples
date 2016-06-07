@@ -82,7 +82,7 @@ int main( int argc, char *argv[] )
      DFBCHECK(DirectFBCreate( &dfb ));
 
      /* create an event buffer with all devices attached that have keys */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_KEYS, DFB_FALSE, &events ));
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS, DFB_FALSE, &events ));
 
      /* set our cooperative level to DFSCL_FULLSCREEN
         for exclusive access to the primary layer */
