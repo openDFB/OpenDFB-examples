@@ -154,15 +154,10 @@ static unsigned long long  fill_rect               ( long t );
 static unsigned long long  fill_rect_blend         ( long t );
 static unsigned long long  fill_rects              ( long t );
 static unsigned long long  fill_rects_blend        ( long t );
-static unsigned long long  fill_triangle           ( long t );
-static unsigned long long  fill_triangle_blend     ( long t );
 static unsigned long long  draw_rect               ( long t );
 static unsigned long long  draw_rect_blend         ( long t );
 static unsigned long long  draw_lines              ( long t );
 static unsigned long long  draw_lines_blend        ( long t );
-static unsigned long long  fill_spans              ( long t );
-static unsigned long long  fill_spans_blend        ( long t );
-static unsigned long long  fill_traps              ( long t );
 static unsigned long long  blit                    ( long t );
 static unsigned long long  blit_mask               ( long t );
 static unsigned long long  blit90                  ( long t );
@@ -243,14 +238,6 @@ static Demo demos[] = {
     "What about alpha blended rectangles?",
     "Alpha Blended Rectangle Filling", "fill-rects-blend", true,
     0, 0, 0, "MPixel/sec", fill_rects_blend },
-  { "Fill Triangles",
-    "Ok, we'll go on with some opaque filled triangles!",
-    "Triangle Filling", "fill-triangle", true,
-    0, 0, 0, "MPixel/sec", fill_triangle },
-  { "Fill Triangles (blend)",
-    "What about alpha blended triangles?",
-    "Alpha Blended Triangle Filling", "fill-triangle-blend", true,
-    0, 0, 0, "MPixel/sec", fill_triangle_blend },
   { "Draw Rectangle",
     "Now pass over to non filled rectangles!",
     "Rectangle Outlines", "draw-rect", true,
@@ -267,18 +254,6 @@ static Demo demos[] = {
     "So what? Where's the blending?",
     "Alpha Blended Line Drawing", "draw-line-blend", true,
     0, 0, 0, "KLines/sec", draw_lines_blend },
-  { "Fill Spans",
-    "Can we have some spans, please?",
-    "Span Filling", "fill-span", true,
-    0, 0, 0, "MPixel/sec", fill_spans },
-  { "Fill Spans (blend)",
-    "So what? Where's the blending?",
-    "Alpha Blended Span Filling", "fill-span-blend", true,
-    0, 0, 0, "MPixel/sec", fill_spans_blend },
-  { "Fill Trapezoids [10]",
-    "Can we have some Trapezoids, please?",
-    "Trapezoid Filling", "fill-traps", true,
-    0, 0, 0, "MPixel/sec", fill_traps },
   { "Blit",
     "Now lead to some blitting demos! The simplest one comes first...",
     "Simple BitBlt", "blit", true,
@@ -796,47 +771,6 @@ static unsigned long long fill_rects_blend( long t )
      return SX*SY*10*(unsigned long long)i;
 }
 
-static unsigned long long fill_triangle( long t )
-{
-     long i, x, y;
-
-     SET_DRAWING_FLAGS( DSDRAW_NOFX );
-
-     if (!showAccelerated( DFXL_FILLTRIANGLE, NULL ))
-          return 0;
-
-     for (i=0; i%100 || myclock()<(t+DEMOTIME); i++) {
-          x = (SW!=SX)?(myrand()%(SW-SX)):0;
-          y = (SH!=SY)?(myrand()%(SH-SY)):0;
-
-          dest->SetColor( dest,
-                          myrand()&0xFF, myrand()&0xFF, myrand()&0xFF, 0xFF );
-          dest->FillTriangle( dest, x, y, x+SX-1, y+SY/2, x, y+SY-1 );
-     }
-     return SX*SY*(unsigned long long)i/2;
-}
-
-static unsigned long long fill_triangle_blend( long t )
-{
-     long i, x, y;
-
-     SET_DRAWING_FLAGS( DSDRAW_BLEND );
-
-     if (!showAccelerated( DFXL_FILLTRIANGLE, NULL ))
-          return 0;
-
-     for (i=0; i%100 || myclock()<(t+DEMOTIME); i++) {
-          x = (SW!=SX)?(myrand()%(SW-SX)):0;
-          y = (SH!=SY)?(myrand()%(SH-SY)):0;
-
-          dest->SetColor( dest,
-                          myrand()&0xFF, myrand()&0xFF, myrand()&0xFF,
-                          myrand()%0x64 );
-          dest->FillTriangle( dest, x, y, x+SX-1, y+SY/2, x, y+SY-1 );
-     }
-     return SX*SY*(unsigned long long)i/2;
-}
-
 static unsigned long long draw_rect( long t )
 {
      long i;
@@ -935,84 +869,6 @@ static unsigned long long draw_lines_blend( long t )
           dest->DrawLines( dest, lines, 10 );
      }
      return 1000*10*(unsigned long long)i;
-}
-
-static unsigned long long fill_spans_with_flags( long t, DFBSurfaceDrawingFlags flags )
-{
-     long    i, r;
-     DFBSpan spans[SY];
-
-     r = SW - SX - 8;
-     if (r > 23)
-          r = 23;
-
-     SET_DRAWING_FLAGS( flags );
-
-     if (!showAccelerated( DFXL_FILLRECTANGLE, NULL ))
-          return 0;
-
-     for (i=0; i%100 || myclock()<(t+DEMOTIME); i++) {
-          int w = myrand() % r + 2;
-          int x = myrand() % (SW-SX-w*2) + w;
-          int d = 0;
-          int a = 1;
-          int l;
-
-          for (l=0; l<SY; l++) {
-               spans[l].x = x + d;
-               spans[l].w = SX;
-
-               d += a;
-
-               if (d == w)
-                    a = -1;
-               else if (d == -w)
-                    a = 1;
-          }
-
-          dest->SetColor( dest, myrand()&0xFF, myrand()&0xFF, myrand()&0xFF,
-                          (flags & DSDRAW_BLEND) ? myrand()%0x64 : 0xff );
-          dest->FillSpans( dest, myrand() % (SH-SY), spans, SY );
-     }
-
-     return SX * SY * (unsigned long long) i;
-}
-
-static unsigned long long fill_spans( long t )
-{
-     return fill_spans_with_flags( t, DSDRAW_NOFX );
-}
-
-static unsigned long long fill_spans_blend( long t )
-{
-     return fill_spans_with_flags( t, DSDRAW_BLEND );
-}
-
-static unsigned long long fill_traps( long t )
-{
-     long i, l;
-     DFBTrapezoid traps[10];
-
-     SET_DRAWING_FLAGS( DSDRAW_NOFX );
-
-     if (!showAccelerated( DFXL_FILLTRAPEZOID, NULL ))
-          return 0;
-
-     for (i=0; i%100 || myclock()<(t+DEMOTIME); i++) {
-          for (l=0; l<10; l++) {
-               traps[l].x1 = (myrand()%(SW-SX*3/2))+SX/2;
-               traps[l].y1 = (SH!=SY)?(myrand()%(SH-SY)):0;
-               traps[l].x2 = traps[l].x1 - SX/2;
-               traps[l].y2 = traps[l].y1 + SY-1;
-               traps[l].w1 = SX/2;
-               traps[l].w2 = SX*3/2;
-          }
-
-          dest->SetColor( dest, myrand()&0xFF, myrand()&0xFF, myrand()&0xFF, 0xFF );
-          dest->FillTrapezoids( dest, traps, 10 );
-     }
-
-     return SX*SY*10*(unsigned long long)i;
 }
 
 static unsigned long long blit( long t )

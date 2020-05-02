@@ -81,20 +81,13 @@ df_fonts=no
 df_input=no
 df_joystick=no
 df_layer=no
-df_matrix=no
 df_netload=no
 df_palette=no
 df_particle=no
 df_porter=no
 df_stress=no
-df_texture=no
-df_texture3d=no
-df_video=no
-df_video_particle=no
 df_window=no
 pss=no
-ve_test=no
-df_knuckles=no
 df_neo=no
 spacedream=no
 
@@ -114,20 +107,13 @@ if test "$apps" = "all"; then
 	df_input=yes
 	df_joystick=yes
 	df_layer=yes
-	df_matrix=yes
 	df_netload=yes
 	df_palette=yes
 	df_particle=yes
 	df_porter=yes
 	df_stress=yes
-	df_texture=yes
-	df_texture3d=yes
-	df_video=yes
-	df_video_particle=yes
 	df_window=yes
 	pss=yes
-	ve_test=yes
-	df_knuckles=yes
 	df_neo=yes
 	spacedream=yes
 
@@ -150,20 +136,13 @@ elif test "$apps" != "none"; then
 		df_input)		df_input=yes;;
 		df_joystick)		df_joystick=yes;;
 		df_layer)		df_layer=yes;;
-		df_matrix)		df_matrix=yes;;
 		df_netload)		df_netload=yes;;
 		df_palette)		df_palette=yes;;
 		df_particle)		df_particle=yes;;
 		df_porter)		df_porter=yes;;
 		df_stress)		df_stress=yes;;
-		df_texture)		df_texture=yes;;
-		df_texture3d)		df_texture3d=yes;;
-		df_video)		df_video=yes;;
-		df_video_particle)	df_video_particle=yes;;
 		df_window)		df_window=yes;;
 		pss)			pss=yes;;
-		ve_test)		ve_test=yes;;
-		df_knuckles)		df_knuckles=yes;;
 		df_neo)			df_neo=yes;;
 		spacedream)		spacedream=yes;;
 		*)
@@ -176,17 +155,6 @@ if test "$STEREO_API" != "yes"; then
 	if test "$df_andi3d" = "yes"; then
 		df_andi3d=no
 		AC_MSG_WARN([df_andi3d is excluded since stereo API is not supported])
-	fi
-	if test "$df_texture3d" = "yes"; then
-		df_texture3d=no
-		AC_MSG_WARN([df_texture3d is excluded since stereo API is not supported])
-	fi
-fi
-
-if test "$WATER" != "runs"; then
-	if test "$df_matrix_water" = "yes"; then
-		df_matrix_water=no
-		AC_MSG_WARN([df_matrix_water is excluded since water API is not supported])
 	fi
 fi
 
@@ -205,7 +173,6 @@ AM_CONDITIONAL(DF_FONTS, test "$df_fonts" = "yes")
 AM_CONDITIONAL(DF_INPUT, test "$df_input" = "yes")
 AM_CONDITIONAL(DF_JOYSTICK, test "$df_joystick" = "yes")
 AM_CONDITIONAL(DF_LAYER, test "$df_layer" = "yes")
-AM_CONDITIONAL(DF_MATRIX, test "$df_matrix" = "yes")
 AM_CONDITIONAL(DF_NETLOAD, test "$df_netload" = "yes")
 AM_CONDITIONAL(DF_PALETTE, test "$df_palette" = "yes")
 AM_CONDITIONAL(DF_PARTICLE, test "$df_particle" = "yes")
@@ -213,12 +180,8 @@ AM_CONDITIONAL(DF_PORTER, test "$df_porter" = "yes")
 AM_CONDITIONAL(DF_STRESS, test "$df_stress" = "yes")
 AM_CONDITIONAL(DF_TEXTURE, test "$df_texture" = "yes")
 AM_CONDITIONAL(DF_TEXTURE3D, test "$df_texture3d" = "yes")
-AM_CONDITIONAL(DF_VIDEO, test "$df_video" = "yes")
-AM_CONDITIONAL(DF_VIDEO_PARTICLE, test "$df_video_particle" = "yes")
 AM_CONDITIONAL(DF_WINDOW, test "$df_window" = "yes")
 AM_CONDITIONAL(PSS, test "$pss" = "yes")
-AM_CONDITIONAL(VE_TEST, test "$ve_test" = "yes")
-AM_CONDITIONAL(DF_KNUCKLES, test "$df_knuckles" = "yes")
 AM_CONDITIONAL(DF_NEO, test "$df_neo" = "yes")
 AM_CONDITIONAL(SPACEDREAM, test "$spacedream" = "yes")
 
@@ -256,20 +219,13 @@ df_fonts                  $df_fonts
 df_input                  $df_input
 df_joystick               $df_joystick
 df_layer                  $df_layer
-df_matrix                 $df_matrix
 df_netload                $df_netload
 df_palette                $df_palette
 df_particle               $df_particle
 df_porter                 $df_porter
 df_stress                 $df_stress
-df_texture                $df_texture
-df_texture3d              $df_texture3d
-df_video                  $df_video
-df_video_particle         $df_video_particle
 df_window                 $df_window
 pss                       $pss
-ve_test                   $ve_test
-df_knuckles               $df_knuckles
 df_neo                    $df_neo
 spacedream                $spacedream
 ])

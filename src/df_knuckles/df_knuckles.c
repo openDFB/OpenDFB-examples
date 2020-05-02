@@ -47,6 +47,7 @@ static void ClearBuffer (void)
 
 static void DrawTriangle (float light1, float light2, Tri3D* tri)
 {
+#if 0
   u8 r, g, b;
   int X, Y;
 
@@ -83,6 +84,7 @@ static void DrawTriangle (float light1, float light2, Tri3D* tri)
     default:
       break;
     }
+#endif
 }
 
 static void DrawIt (void)

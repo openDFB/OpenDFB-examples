@@ -101,7 +101,6 @@ int main( int argc, char *argv[] )
      IDirectFBDisplayLayer  *layer;
 
      IDirectFBImageProvider *provider;
-     IDirectFBVideoProvider *video_provider;
 
      IDirectFBSurface       *bgsurface;
      IDirectFBSurface       *cursurface;
@@ -169,12 +168,6 @@ int main( int argc, char *argv[] )
 
           DFBCHECK(dfb->CreateFont( dfb, FONT, &desc, &font ));
           font->GetHeight( font, &fontheight );
-     }
-
-     if (argc < 2 ||
-         dfb->CreateVideoProvider( dfb, argv[1], &video_provider ) != DFB_OK)
-     {
-          video_provider = NULL;
      }
 
      {
@@ -252,21 +245,13 @@ int main( int argc, char *argv[] )
                          DWDESC_WIDTH | DWDESC_HEIGHT | 
                          DWDESC_STACKING );
 
-          if (!video_provider) {
+          {
                desc.caps = DWCAPS_ALPHACHANNEL;
                desc.surface_caps = DSCAPS_PREMULTIPLIED;
                desc.flags |= DWDESC_CAPS | DWDESC_SURFACE_CAPS;
 
                sdsc.width  = 300;
                sdsc.height = 200;
-          }
-          else {
-               video_provider->GetSurfaceDescription( video_provider, &sdsc );
-
-               if (sdsc.flags & DSDESC_CAPS) {
-                    desc.flags       |= DWDESC_SURFACE_CAPS;
-                    desc.surface_caps = sdsc.caps;
-               }
           }
 
           desc.posx   = 20;
@@ -281,11 +266,6 @@ int main( int argc, char *argv[] )
 
           window2->CreateEventBuffer( window2, &buffer );
 
-          if (video_provider) {
-               video_provider->PlayTo( video_provider, window_surface2,
-                                       NULL, NULL, NULL );
-          }
-          else
           {
                window_surface2->SetDrawingFlags( window_surface2, DSDRAW_SRC_PREMULTIPLY );
 
@@ -496,9 +476,6 @@ int main( int argc, char *argv[] )
                }
           }
 
-          if (video_provider)
-               window_surface2->Flip( window_surface2, NULL, 0 );
-
           if (active) {
                if (grabbed == 1) {
                     active->Move( active, endx - startx, endy - starty);
@@ -539,9 +516,6 @@ int main( int argc, char *argv[] )
                }
           }
      }
-
-     if (video_provider)
-          video_provider->Release( video_provider );
 
      buffer->Release( buffer );
      font->Release( font );

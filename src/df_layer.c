@@ -102,7 +102,6 @@ int main( int argc, char *argv[] )
 {
      DFBResult                    ret;
      IDirectFBSurface            *videosurface;
-     IDirectFBVideoProvider      *videoprovider;
      IDirectFBDisplayLayer       *videolayer = NULL;
      DFBDisplayLayerConfig        dlc;
      DFBSurfaceDescription        dsc;
@@ -126,16 +125,6 @@ int main( int argc, char *argv[] )
      if (ret)
           DirectFBErrorFatal( "DirectFBCreate failed", ret );
 
-
-     /* Create a videoprovider for the file or device */
-     ret = dfb->CreateVideoProvider( dfb, argv[1], &videoprovider );
-     if (ret)
-          DirectFBErrorFatal( "dfb->CreateVideoProvider failed", ret );
-
-     /* Query capabilities of the video provider */
-     videoprovider->GetCapabilities (videoprovider, &vcaps);
-
-
      /* Enumerate display layers */
      ret = dfb->EnumDisplayLayers( dfb, enum_layers_callback, &videolayer );
      if (ret)
@@ -152,9 +141,6 @@ int main( int argc, char *argv[] )
      if (ret)
           DirectFBErrorFatal( "IDirectFBDisplayLayer::SetCooperativeLevel() "
                               "failed", ret );
-
-     /* Get the surface description to get the dimensions of the video */
-     videoprovider->GetSurfaceDescription( videoprovider, &dsc );
 
      /* Try deinterlacing if video provider is capable, try YUY2 */
      dlc.flags       = DLCONF_WIDTH | DLCONF_HEIGHT |
@@ -205,31 +191,6 @@ int main( int argc, char *argv[] )
      if (ret)
           DirectFBErrorFatal( "videolayer->GetSurface failed", ret );
 
-     /* Have the video decoded into the surface of the layer */
-     ret = videoprovider->PlayTo( videoprovider, videosurface, NULL, NULL, NULL );
-     if (ret) {
-
-          /* If video provider failed for YUY2, try UYVY */
-          if (dlc.flags & DLCONF_PIXELFORMAT && dlc.pixelformat == DSPF_YUY2) {
-               DirectFBError( "videoprovider->PlayTo with YUY2 failed", ret );
-
-               fprintf (stderr, "Trying UYVY...\n");
-
-               dlc.pixelformat = DSPF_UYVY;
-               ret = videolayer->SetConfiguration( videolayer, &dlc );
-               if (ret)
-                    DirectFBErrorFatal( "videolayer->SetConfiguration failed", ret );
-
-               ret = videoprovider->PlayTo( videoprovider, videosurface, NULL, NULL, NULL );
-               if (ret)
-                    DirectFBErrorFatal( "videoprovider->PlayTo with UYVY failed, too", ret );
-
-               fprintf (stderr, "Ok.\n");
-          }
-          else
-               DirectFBErrorFatal( "videoprovider->PlayTo failed", ret );
-     }
-
      /* Create an input buffer for any device that has keys */
      ret = dfb->CreateInputEventBuffer( dfb, DIDCAPS_KEYS, DFB_TRUE, &events );
      if (ret)
@@ -274,7 +235,7 @@ int main( int argc, char *argv[] )
 
      /* Shutdown */
      events->Release( events );
-     videoprovider->Release( videoprovider );
+
      videosurface->Release( videosurface );
      videolayer->Release( videolayer );
      dfb->Release( dfb );

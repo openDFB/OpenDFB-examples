@@ -993,11 +993,12 @@ vbExec( VeVertexBuffer   *buffer,
 
      D_DEBUG( "VB/Execute: %d/%d vertices, %d/%d indices\n",
               buffer->num_vertices, buffer->count, buffer->num_indices, (buffer->count - 2) * 3 );
-
+#if 0
      /* Render built triangle list. */
      if (buffer->num_indices > 0)
           surface->TextureTriangles( surface, texture, buffer->vertices,
                                      buffer->indices, buffer->num_indices, DTTF_LIST );
+#endif
 }
 
 void

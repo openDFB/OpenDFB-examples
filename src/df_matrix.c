@@ -226,6 +226,7 @@ set_matrix( const matrix_t *cairo )
 int
 main( int argc, char *argv[] )
 {
+#if 0
      int            i = 0;
      int            width, height;
      matrix_t matrix;
@@ -338,7 +339,7 @@ main( int argc, char *argv[] )
                }
           }
      }
-
+#endif
      /* Shouldn't reach this. */
      return 0;
 }

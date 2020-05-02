@@ -61,8 +61,6 @@ static IDirectFBFont          *font;
 /* The texture surface. */
 static IDirectFBSurface       *texture;
 
-static IDirectFBVideoProvider *provider = NULL;
-
 static int screen_width, screen_height;
 
 
@@ -278,17 +276,6 @@ main( int argc, char *argv[] )
                if (DFB_PIXELFORMAT_HAS_ALPHA( format ))
                     primary->SetBlittingFlags( primary, DSBLIT_BLEND_ALPHACHANNEL );
           }
-          else {
-               DFBCHECK(dfb->CreateVideoProvider( dfb, argv[1], &provider ));
-
-               DFBCHECK(provider->GetSurfaceDescription( provider, &sdsc ));
-
-               primary->GetPixelFormat( primary, &sdsc.pixelformat );
-
-               DFBCHECK(dfb->CreateSurface( dfb, &sdsc, &texture ));
-
-               DFBCHECK(provider->PlayTo( provider, texture, NULL, NULL, NULL ));
-          }
      }
      else {
           DFBCHECK(util_load_image( dfb, DATADIR"/texture.png", DSPF_UNKNOWN,
@@ -348,10 +335,6 @@ main( int argc, char *argv[] )
 
      /* Free buffer memory. */
      vbDestroy( buffer );
-
-     /* Release video provider. */
-     if (provider)
-          provider->Release( provider );
 
      /* Release other interfaces to shutdown DirectFB. */
      font->Release( font );

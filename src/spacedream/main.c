@@ -222,7 +222,7 @@ int main( int argc, char *argv[] )
 
      /* get an interface to the primary keyboard and create an
         input buffer for it */
-     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DICAPS_ALL, DFB_FALSE, &buffer ));
+     DFBCHECK(dfb->CreateInputEventBuffer( dfb, DIDCAPS_ALL, DFB_FALSE, &buffer ));
 
      /* set our cooperative level to DFSCL_FULLSCREEN for exclusive access to
         the primary layer */

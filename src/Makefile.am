@@ -75,10 +75,6 @@ if DF_LAYER
 bin_PROGRAMS += df_layer
 endif
 
-if DF_MATRIX
-bin_PROGRAMS += df_matrix
-endif
-
 if DF_NETLOAD
 bin_PROGRAMS += df_netload
 endif
@@ -99,32 +95,12 @@ if DF_STRESS
 bin_PROGRAMS += df_stress
 endif
 
-if DF_TEXTURE
-bin_PROGRAMS += df_texture
-endif
-
-if DF_TEXTURE3D
-bin_PROGRAMS += df_texture3d
-endif
-
-if DF_VIDEO
-bin_PROGRAMS += df_video
-endif
-
-if DF_VIDEO_PARTICLE
-bin_PROGRAMS += df_video_particle
-endif
-
 if DF_WINDOW
 bin_PROGRAMS += df_window
 endif
 
 if PSS
 bin_PROGRAMS += pss
-endif
-
-if VE_TEST
-noinst_PROGRAMS = ve_test
 endif
 
 df_andi_SOURCES = df_andi.c 
@@ -169,9 +145,6 @@ df_joystick_LDADD  = $(LIBADDS) -lm
 df_layer_SOURCES = df_layer.c
 df_layer_LDADD = $(LIBADDS) -lm
 
-df_matrix_SOURCES = df_matrix.c
-df_matrix_LDADD = $(LIBADDS) -lm
-
 df_netload_SOURCES = df_netload.c 
 df_netload_LDADD  = $(LIBADDS)
 
@@ -190,24 +163,10 @@ df_porter_LDADD  = $(LIBADDS)
 df_stress_SOURCES = df_stress.c
 df_stress_LDADD = $(LIBADDS)
 
-df_texture_SOURCES = df_texture.c util.h ve.c ve.h
-df_texture_LDADD = $(LIBADDS) -lm
-
-df_texture3d_SOURCES = df_texture3d.c util.h ve.c ve.h
-df_texture3d_LDADD = $(LIBADDS) -lm
-
-df_video_SOURCES = df_video.c 
-df_video_LDADD  = $(LIBADDS) -lm
-
-df_video_particle_SOURCES = df_video_particle.c 
-df_video_particle_LDADD  = $(LIBADDS) -lm
 
 df_window_SOURCES = df_window.c 
 df_window_LDADD  = $(LIBADDS) -lm
 
 pss_SOURCES = pss.c
 pss_LDADD = $(LIBADDS) -lm
-
-ve_test_SOURCES = ve_test.c ve.c ve.h
-ve_test_LDADD   = $(LIBADDS) -lm
 

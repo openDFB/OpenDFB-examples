@@ -67,7 +67,6 @@ test_file()
      DFBSurfaceDescription     sdsc;
      IDirectFBDataBuffer      *buffer;
      IDirectFBImageProvider   *image_provider;
-     IDirectFBVideoProvider   *video_provider;
 
      primary->Clear( primary, 0, 0, 0, 0 );
 
@@ -83,15 +82,6 @@ test_file()
           
           image_provider->Release( image_provider );
      }
-     else {
-          DirectFBError( "IDirectFBDataBuffer::CreateImageProvider()", ret );
-
-          DFBCHECK(buffer->CreateVideoProvider( buffer, &video_provider ));
-               
-          DFBCHECK(video_provider->GetSurfaceDescription( video_provider, &sdsc ));
-          
-          video_provider->Release( video_provider );
-     }
 
      printf( "\nImage size: %dx%d\n\n", sdsc.width, sdsc.height );
      
@@ -106,7 +96,6 @@ test_file_mmap()
      DFBSurfaceDescription     sdsc;
      IDirectFBDataBuffer      *buffer;
      IDirectFBImageProvider   *image_provider;
-     IDirectFBVideoProvider   *video_provider;
 
      int                       fd;
      void                     *data;
@@ -145,15 +134,6 @@ test_file_mmap()
           DFBCHECK(image_provider->GetSurfaceDescription( image_provider, &sdsc ));
           
           image_provider->Release( image_provider );
-     }
-     else {
-          DirectFBError( "IDirectFBDataBuffer::CreateImageProvider()", ret );
-
-          DFBCHECK(buffer->CreateVideoProvider( buffer, &video_provider ));
-               
-          DFBCHECK(video_provider->GetSurfaceDescription( video_provider, &sdsc ));
-          
-          video_provider->Release( video_provider );
      }
 
      printf( "\nImage size: %dx%d\n\n", sdsc.width, sdsc.height );
@@ -284,7 +264,6 @@ test_file_streamed()
      DFBSurfaceDescription     sdsc;
      IDirectFBDataBuffer      *buffer;
      IDirectFBImageProvider   *image_provider = NULL;
-     IDirectFBVideoProvider   *video_provider = NULL;
      IDirectFBSurface         *image;
      pthread_t                 st;
      
@@ -309,13 +288,6 @@ test_file_streamed()
      if (ret == DFB_OK) {
           DFBCHECK(image_provider->GetSurfaceDescription( image_provider, &sdsc ));
      }
-     else {
-          DirectFBError( "IDirectFBDataBuffer::CreateImageProvider()", ret );
-
-          DFBCHECK(buffer->CreateVideoProvider( buffer, &video_provider ));
-               
-          DFBCHECK(video_provider->GetSurfaceDescription( video_provider, &sdsc ));
-     }
 
      printf( "\nImage size: %dx%d\n\n", sdsc.width, sdsc.height );
 
@@ -325,16 +297,7 @@ test_file_streamed()
           image_provider->SetRenderCallback( image_provider, render_callback, image );
      
           DFBCHECK(image_provider->RenderTo( image_provider, image, NULL ));
-     } /* video_provider */
-     else { 
-          DFBCHECK(video_provider->PlayTo( video_provider, image, NULL,
-                                                  frame_callback, image ));
-
-          /* play 10 seconds */
-          sleep( 10 );
-
-          video_provider->Stop( video_provider );
-     }
+     } 
 
      pthread_cancel( st );
      pthread_join( st, NULL );
@@ -346,8 +309,6 @@ test_file_streamed()
      image->Release( image );
      if (image_provider)
           image_provider->Release( image_provider );
-     if (video_provider)
-          video_provider->Release( video_provider );
      buffer->Release( buffer );
      
      sleep( 2 );
